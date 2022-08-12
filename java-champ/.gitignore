@@ -1,0 +1,51 @@
+.idea
+eclipsebin
+idea_modules
+*webtestclasses.xml
+atlassian-ide-plugin.xml
+*.iml
+rebel.xml
+hybris4intellij.properties
+platformhome.properties
+**/custom/**/build.xml
+**/hmc.xsd
+**/resources/beans.xsd
+**/resources/items.xsd
+**-testclasses.xml
+**gensrc
+**/ruleset.xml
+**/extensioninfo.xsd
+**/custom/**/classes
+**/target/
+**/hmc/bin/
+*testclasses.xml
+**/resources/solr/server/data/
+**/tomcat/work/
+**/commonwebsrc
+velocity.log
+.DS_Store
+.history/**
+favicon.html
+favicon.ico
+hybris/**/*.d.ts
+**/lib/.lastupdate
+
+# Ignore maven project-specific cache directory
+.mvn/repository
+.mvn/wrapper
+
+# Ignore Gradle project-specific cache directory
+.gradle
+
+# Ignore Gradle build output directory
+build
+
+# Licenses
+licenses/
+
+# Installer
+installer/*
+!installer/recipes/
+
+# JUnit
+.junit/
