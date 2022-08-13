@@ -39,8 +39,9 @@ public class QueryManagerController {
         );
     }
 
-
-
-
+    @PutMapping("/modify-query-in-table")
+    public ResponseEntity<Void> delete(@RequestBody QueryDTO query){
+        return null;
+    }
 
 }
