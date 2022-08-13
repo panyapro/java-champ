@@ -12,6 +12,7 @@ import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,12 +29,8 @@ public class DynamicTableService {
     public ResultStatus create(TableDTO tableDTO) {
 
         // TODO validate invalid table name / invalid column type / invalid column name / invalid primary key
-        try (Connection connection =
-                     hikariDataSource.getConnection();
-
-             PreparedStatement ps =
-                     connection.prepareStatement(converter.tableDTOtoSql(tableDTO))) {
-            ps.executeUpdate();
+        try {
+            execute(converter.tableDTOtoSql(tableDTO));
             return ResultStatus.ACCEPTED;
         } catch (Exception e) {
             log.error("Unexpected error occurred while trying create table for {} ", tableDTO.getTableName(), e);
@@ -42,16 +39,22 @@ public class DynamicTableService {
     }
 
     public ResultStatus remove(String tableName) {
-        try (Connection connection =
-                     hikariDataSource.getConnection();
-
-             PreparedStatement ps =
-                     connection.prepareStatement(converter.dropByNameSql(tableName))) {
-            ps.executeUpdate();
+        try {
+            execute(converter.dropByNameSql(tableName));
             return ResultStatus.ACCEPTED;
         } catch (Exception e) {
             log.error("Unexpected error occurred while trying remove table for {} ", tableName, e);
             return ResultStatus.NOT_ACCEPTABLE;
+        }
+    }
+
+    public boolean execute(String sql) throws SQLException {
+        try (Connection connection =
+                     hikariDataSource.getConnection();
+
+             PreparedStatement ps =
+                     connection.prepareStatement(sql)) {
+            return ps.execute();
         }
     }
 

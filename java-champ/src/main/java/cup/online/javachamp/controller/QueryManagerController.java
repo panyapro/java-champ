@@ -39,9 +39,19 @@ public class QueryManagerController {
         );
     }
 
-    @DeleteMapping("/modify-query-in-table")
-    public ResponseEntity<Void> delete(@RequestBody QueryDTO query){
-        return null;
+    @DeleteMapping("/delete-single-query-by-id/{id}")
+    public ResponseEntity<Void> delete(@PathVariable("id") Integer queryId){
+        return new ResponseEntity<>(queryService.remove(queryId).getHttpStatus());
+    }
+
+    @GetMapping("/execute-single-query-by-id/{id}")
+    public ResponseEntity<Void> execute(@PathVariable("id") Integer queryId){
+        return new ResponseEntity<>(queryService.execute(queryId).getHttpStatus());
+    }
+
+    @GetMapping("/get-single-query-by-id/{id}")
+    public ResponseEntity<Void> get(@PathVariable("id") Integer queryId){
+        return new ResponseEntity<>(queryService.execute(queryId).getHttpStatus());
     }
 
 }

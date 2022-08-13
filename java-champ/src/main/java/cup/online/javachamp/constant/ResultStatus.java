@@ -7,7 +7,8 @@ public enum ResultStatus {
     OK(HttpStatus.OK),
     ACCEPTED(HttpStatus.CREATED),
     NOT_FOUND(HttpStatus.NOT_FOUND),
-    NOT_ACCEPTABLE(HttpStatus.NOT_ACCEPTABLE);
+    NOT_ACCEPTABLE(HttpStatus.NOT_ACCEPTABLE),
+    ERROR(HttpStatus.INTERNAL_SERVER_ERROR);
 
     private final HttpStatus httpStatus;
 
