@@ -8,10 +8,14 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Optional;
 
 @Repository
-public interface QueryRepository extends CrudRepository<QueryEntity, Integer> {
+public interface QueryRepository extends CrudRepository<QueryEntity, Long> {
 
-    Optional<QueryEntity> findById(Integer id);
+    Optional<QueryEntity> findById(Long id);
 
     @Transactional
     void deleteById(Integer id);
+
+    Optional<QueryEntity> findByQueryId(Integer id);
+
+    Optional<QueryEntity> findByTableName(String name);
 }

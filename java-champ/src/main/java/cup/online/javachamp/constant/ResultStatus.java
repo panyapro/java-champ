@@ -5,8 +5,9 @@ import org.springframework.http.HttpStatus;
 public enum ResultStatus {
 
     OK(HttpStatus.OK),
-    ACCEPTED(HttpStatus.ACCEPTED),
-    NOT_FOUND(HttpStatus.NOT_FOUND);
+    ACCEPTED(HttpStatus.CREATED),
+    NOT_FOUND(HttpStatus.NOT_FOUND),
+    NOT_ACCEPTABLE(HttpStatus.NOT_ACCEPTABLE);
 
     private final HttpStatus httpStatus;
 

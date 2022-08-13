@@ -1,14 +1,13 @@
 package cup.online.javachamp.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Data
 @Builder
+@Getter
+@Setter
 @Entity
 @Table(name = "query")
 @NoArgsConstructor
@@ -18,6 +17,9 @@ public class QueryEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "query_id")
+    private Integer queryId;
 
     @Column(name = "query")
     private String query;
