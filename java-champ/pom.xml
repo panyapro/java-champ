@@ -9,8 +9,8 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>cup.online</groupId>
-	<artifactId>java-champ</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<artifactId>pavershin-java-comptetion</artifactId>
+	<version>1.9</version>
 	<name>java-champ</name>
 	<properties>
 		<java.version>11</java.version>

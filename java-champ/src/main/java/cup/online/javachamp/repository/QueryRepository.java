@@ -5,6 +5,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -14,5 +15,5 @@ public interface QueryRepository extends CrudRepository<QueryEntity, Long> {
 
     Optional<QueryEntity> findByQueryId(Integer id);
 
-    Optional<QueryEntity> findByTableName(String name);
+    List<QueryEntity> findByTableName(String name);
 }

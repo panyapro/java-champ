@@ -8,17 +8,26 @@ import java.util.List;
 
 @Data
 @Builder
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class TableDTO {
+public class ReportDTO {
 
-    private String tableName;
-    private Integer columnsAmount;
-    private String primaryKey;
-    private List<ColumnInfo> columnInfos;
+    private Integer reportId;
+    private Integer tableAmount;
+    private List<TableInfo> tables;
+
+
+    @Data
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class TableInfo {
+        private String tableName;
+        private List<ColumnInfo> columns;
+    }
 
     @Data
     @Builder
@@ -27,5 +36,6 @@ public class TableDTO {
     public static class ColumnInfo {
         private String title;
         private String type;
+        private Integer size;
     }
 }

@@ -13,8 +13,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Service
 @Slf4j
@@ -27,8 +26,6 @@ public class DynamicTableService {
     private SqlConverter converter;
 
     public ResultStatus create(TableDTO tableDTO) {
-
-        // TODO validate invalid table name / invalid column type / invalid column name / invalid primary key
         try {
             execute(converter.tableDTOtoSql(tableDTO));
             return ResultStatus.ACCEPTED;
@@ -55,6 +52,16 @@ public class DynamicTableService {
              PreparedStatement ps =
                      connection.prepareStatement(sql)) {
             return ps.execute();
+        }
+    }
+
+    public boolean checkExistExecute(String sql) throws SQLException {
+        try (Connection connection =
+                     hikariDataSource.getConnection();
+
+             PreparedStatement ps =
+                     connection.prepareStatement(sql)) {
+            return ps.executeQuery().isBeforeFirst();
         }
     }
 
@@ -90,5 +97,41 @@ public class DynamicTableService {
             log.error("Unexpected error occurred while trying get by table name {} ", tableName, e);
         }
         return null;
+    }
+
+    public Map<String, Integer> countByColumnName(String tableName, List<String> columnNames) {
+        try (Connection connection =
+                     hikariDataSource.getConnection();
+
+             PreparedStatement ps =
+                     connection.prepareStatement(converter.countForEachColumn(tableName, columnNames))) {
+
+            ResultSet rs = ps.executeQuery();
+            if (!rs.next()) {
+                log.debug("No data is available for {} ", tableName);
+                return Collections.emptyMap();
+            } else {
+                Map<String, Integer> map = new HashMap<>();
+                do {
+                    for (String columnName : columnNames) {
+                        if (rs.getString(columnName) != null) {
+                            map.put(columnName, rs.getInt(columnName));
+                        }
+                    }
+                } while (rs.next());
+                return map;
+            }
+        } catch (Exception e) {
+            log.error("Unexpected error occurred while trying get by table name {} ", tableName, e);
+        }
+        return Collections.emptyMap();
+    }
+
+    public boolean isTableExist(String tableName) throws SQLException {
+        return checkExistExecute(converter.tableExistSql(tableName.toUpperCase()));
+    }
+
+    public boolean isColumnExist(String tableName, String columnName) throws SQLException {
+        return checkExistExecute(converter.columnExistInsideTableSql(tableName.toUpperCase(), columnName.toUpperCase()));
     }
 }
